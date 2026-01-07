@@ -1,28 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aventura en el Reino de JS</title>
-    <link rel="stylrsheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <div id="juego-contenedor">
 
-        <seccion id="escena-1" class="escena">
-            <h1>Crea tu Personaje</h1>
+        <section id="escena-1" class="escena">
+            <h1>¡Bienvenido Cazador!</h1>
             <form id="form-jugador">
-                <div class="input-group">
-                    <label>Nombre del heroe:</label>
-                    <input type="text" id="nombre-input">
+                <img src="img/jugadorvikingo.png" id="player-img" alt="Avatar del Jugador">
+                <div class="linea-formulario">
+                    <label>Nombre del Héroe:</label>
+                    <input type="text" id="nombre-input" placeholder="Ej: Arathorn">
                 </div>
 
-              
+                <div class="linea-formulario">
+                    <label>Ataque:</label>
+                    <input type="number" id="atq-input" value="0">
+                </div>
 
+                <div class="linea-formulario">
+                    <label>Defensa:</label>
+                    <input type="number" id="def-input" value="0">
+                </div>
+
+                <div class="linea-formulario">
+                    <label>Vida:</label>
+                    <input type="number" id="vida-input" value="100">
+                </div>
+
+                <p id="error-msg" class="texto-error"></p>
+                <button type="submit">Crear y Continuar</button>
             </form>
-        </seccion>
+        </section>
+
+        <section id="escena-2" class="escena oculto">
+            <h1>Mercado Negro</h1>
+            <div class="info-barra">
+                <p>Dinero: <span id="dinero-display">500</span>€</p>
+            </div>
+            <div id="contenedor-productos" class="grid-productos">
+            </div>
+            <button id="btn-comprar-todo">Confirmar Compras</button>
+        </section>
+
+        <section id="escena-3" class="escena oculto">
+            <h1>Tu Perfil</h1>
+            <div id="tarjeta-jugador">
+            </div>
+            <button id="btn-ir-batalla">Ir a los Combates</button>
+        </section>
+
+        <section id="escena-4" class="escena oculto">
+            <h1>¡Batalla!</h1>
+            <div id="pantalla-combate">
+            </div>
+            <p id="log-combate"></p>
+            <button id="btn-siguiente-combate" class="oculto">Siguiente Rival</button>
+        </section>
+
+        <section id="escena-5" class="escena oculto">
+            <h1>Resultado de la Gesta</h1>
+            <h2 id="resultado-rango"></h2>
+            <p>Puntos finales: <span id="puntos-finales"></span></p>
+            <button id="btn-mostrar-ranking">Ver Ranking en Consola</button> <button
+                onclick="location.reload()">Reiniciar Partida</button>
+        </section>
+
     </div>
-    
+
+    <script type="module" src="src/script.js"></script>
 </body>
+
 </html>
