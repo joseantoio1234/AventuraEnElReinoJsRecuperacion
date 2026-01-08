@@ -1,7 +1,8 @@
 export const validarNombre = (nombre) => {
+
     const regla = /^[A-Z][a-zA-Z\s]{0,19}$/;
 
-    if (regla.test(nombre) && nombre.trim().lenght > 0){
+    if (regla.test(nombre) && nombre.trim().length > 0){
         return true;
     } else {
         return false;
