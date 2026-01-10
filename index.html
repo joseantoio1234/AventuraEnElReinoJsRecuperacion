@@ -32,7 +32,7 @@
 
                 <div class="linea-formulario">
                     <label>Vida:</label>
-                    <input type="number" id="vida-input" value="100">
+                    <input type="number" id="vida-input" value="100" min="100">
                 </div>
 
                 <p id="error-msg" class="texto-error"></p>
@@ -43,11 +43,23 @@
         <section id="escena-2" class="escena oculto">
             <h1>Mercado Negro</h1>
             <div class="info-barra">
-                <p>Dinero: <span id="dinero-display">500</span>€</p>
+                <p>Dinero : <span id="dinero-display">500</span>€</p>
             </div>
             <div id="contenedor-productos" class="grid-productos">
             </div>
             <button id="btn-comprar-todo">Confirmar Compras</button>
+
+            <div class="seccion-inventario">
+                <h3> Inventario </h3>
+                <div id="barra-inventario" class="grid-inventario">
+                    <div class="slot">VACIO</div>
+                    <div class="slot">VACIO</div>
+                    <div class="slot">VACIO</div>
+                    <div class="slot">VACIO</div>
+                    <div class="slot">VACIO</div>
+                    <div class="slot">VACIO</div>
+                </div>
+            </div>
         </section>
 
         <section id="escena-3" class="escena oculto">
