@@ -18,7 +18,34 @@ body{
     border-radius: 10px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     text-align: center;
+        
 }
+
+/* saco de dinero */
+#saco-dinero{
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    display: inline-block;
+    animation: entrar 1s forwards;
+}
+
+#img-saquito{
+    width: 90px;
+}
+
+#dinero-display{
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+}
+
+@keyframes entrar{
+    from { left: -150px};
+}
+
 
 /* imagen del avatar */
 #player-img {
@@ -29,6 +56,7 @@ body{
     margin-bottom: 15px;
     object-fit: cover;
 }
+
 
 /* logica de escenas */
 .oculto {
@@ -80,5 +108,92 @@ button{
 button:hover{
     background-color: #d4ac0d;
     transform: scale(1.05);
+}
+
+/* mercado */
+
+.grid-productos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 15px;
+    padding: 10px;
+    max-width: 900px;
+    margin: auto;
+
+    
+}
+
+.tarjeta-producto {
+    background-color: #d4a356; 
+    border: 2px solid #8b4513;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    color: black;
+
+}
+
+.tarjeta-producto img {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    border: 1px solid #333;
+    margin-bottom: 10px;
+}
+
+.btn-add {
+    background-color: #f1c40f;
+    border: 1px solid #8b4513;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.en-cesta {
+    background-color: #f1c40f !important; 
+    border-color: #27ae60;
+}
+
+/* barra de inventario*/
+.seccion-inventario {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.grid-inventario {
+    display: flex;
+    gap: 10px;
+    background-color: #5d4037; 
+    padding: 10px;
+    border: 2px solid #d4a356;
+}
+
+.slot {
+    width: 95px;
+    height: 95px;
+    padding: 15px;
+    background-color: #8b4513;
+    border: 1px solid #3e2723;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #ffd700;
+}
+
+.tarjeta-comprada {
+    background-color: #ced692;
+    border: 3px solid #585d01;
+}
+
+/* mini animacion */
+.slot img {
+    transition: transform 0.3s ease;
+    cursor: pointer; 
+}
+
+.slot img:hover{
+    transform: translateY(-10px) scale(1.1);
 }
 

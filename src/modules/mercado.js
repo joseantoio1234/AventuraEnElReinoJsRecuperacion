@@ -1,9 +1,8 @@
 import { PRODUCTOS_MERCADO } from './constants.js';
 
-export function pintarProductos(){
+export function pintarProductos() {
     const contenedor = document.getElementById('contenedor-productos');
     if (!contenedor) return;
-
     contenedor.innerHTML = "";
 
     PRODUCTOS_MERCADO.forEach(producto => {
@@ -20,5 +19,71 @@ export function pintarProductos(){
         `;
 
         contenedor.appendChild(tarjeta);
+
+        const boton = tarjeta.querySelector('.btn-add');
+        boton.addEventListener('click', () => {
+            gestionarCompra(producto, tarjeta, boton);
+        });
     });
 }
+
+// inventario
+function gestionarCompra(producto, tarjeta, boton) {
+    const jugador = window.jugadorLogueado;
+    const slots = document.querySelectorAll('.slot');
+
+    //comprobar si ya esta en el inventario
+    const indice = jugador.inventario.findIndex(item => item.id === producto.id);
+
+    if(indice === -1){
+        //añadir al inventario
+        if (jugador.dinero < producto.precio){
+            alert("No tienes suficiente dinero");
+            return;
+        }
+
+        if (jugador.inventario.length >= 6){
+            alert("Inventario lleno");
+            return;
+        }
+
+        jugador.dinero -= producto.precio;
+        jugador.inventario.push(producto);
+
+        //cambia de color al seleccionarla
+        tarjeta.classList.add('tarjeta-comprada');
+        boton.textContent = "Eliminar";
+        boton.style.backgroundColor = "red";
+
+        //añadir producto al primer slot del inventario
+        for (let slot of slots){
+            if (slot.innerHTML === ""){
+                slot.innerHTML = `<img src="${producto.imagen}" id="img-slot-${producto.id}" style="width:100%; height:100%; object-fit:contain;">`;
+                break;
+            }
+        }
+    } else {
+        //retirar
+        jugador.dinero += producto.precio;
+        jugador.inventario.splice(indice, 1);
+        
+        //volver tarjeta producto a original
+        tarjeta.classList.remove('tarjeta-comprada');
+        boton.textContent = "Añadir";
+        boton.style.backgroundColor = "";
+
+        //quitar producto de inventario
+        const imagenRemove = document.getElementById(`img-slot-${producto.id}`);
+        if (imagenRemove){
+            imagenRemove.parentElement.innerHTML = "";
+        }
+
+    }
+
+    // actuañizar dinero
+    const displayDinero = document.getElementById('dinero-display');
+    if (displayDinero) {
+        displayDinero.textContent = jugador.dinero + "";
+    }
+}
+
