@@ -1,3 +1,4 @@
+//regex
 export const validarNombre = (nombre) => {
 
     const regla = /^[A-Z][a-zA-Z\s]{0,19}$/;
