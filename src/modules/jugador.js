@@ -1,9 +1,10 @@
 export class Jugador{
-    constructor(nombre, ataque, defensa, vida){
+    constructor(nombre, ataque, defensa, vida, imagen){
         this.nombre = nombre;
-        this.ataqueBase = Number(ataque);
-        this.defensaBase = Number(defensa);
-        this.vidaBase = Number(vida);
+        this.atq = Number(ataque);
+        this.def = Number(defensa);
+        this.vida = Number(vida);
+        this.imagen = imagen;
         this.dinero = 500;
         this.puntos = 0;
         this.inventario = [];   

@@ -1,3 +1,4 @@
+import { mostrarPerfil } from '../script.js';
 import { PRODUCTOS_MERCADO } from './constants.js';
 
 export function pintarProductos() {
@@ -9,11 +10,21 @@ export function pintarProductos() {
         const tarjeta = document.createElement('div');
         tarjeta.className = 'tarjeta-producto';
 
+        //tipo de producto
+        let nombreEstadistica = "";
+        if (producto.tipo === "Arma"){
+            nombreEstadistica = "Ataque";
+        } else if (producto.tipo === "Armadura"){
+            nombreEstadistica = "Defensa";
+        } else if (producto.tipo === "Consumible"){
+            nombreEstadistica = "Vida"; 
+        }
+
         tarjeta.innerHTML = `
         <img src="${producto.imagen}" alt="${producto.nombre}">
         <h3>${producto.nombre}</h3>
         <p class="rareza">${producto.rareza}</p>
-        <p class="bonus" style="color: yellow;">Bonus: +${producto.bonus}</p>
+        <p class="bonus" style="color: yellow;">${nombreEstadistica}: +${producto.bonus}</p>
         <p class="precio"><strong>${producto.precio}</strong>€</p>
         <button class="btn-add" data-id="${producto.id}">Añadir</button>
         `;
@@ -87,3 +98,28 @@ function gestionarCompra(producto, tarjeta, boton) {
     }
 }
 
+export function botonConfirmar (){
+    const btnConfirmar = document.getElementById('btn-comprar-todo');
+
+    btnConfirmar.addEventListener('click', () =>{
+        const jugador = window.jugadorLogueado;
+
+        // sumar bonus al personaje
+       jugador.inventario.forEach(objeto => {
+    if (objeto.tipo === "Arma") {
+        jugador.atq += objeto.bonus;
+    } else if (objeto.tipo === "Armadura") {
+        jugador.def += objeto.bonus;
+    } else if (objeto.tipo === "Consumible") {
+        jugador.vida += objeto.bonus;
+    }
+});
+
+        document.getElementById('escena-2').classList.add('oculto');
+        document.getElementById('escena-3').classList.remove('oculto');
+
+        mostrarPerfil();
+
+       
+    });
+}
