@@ -2,6 +2,8 @@ import { validarNombre, validarPuntos } from "./modules/utils.js";
 import { pintarProductos } from './modules/mercado.js';
 import { Jugador } from './modules/jugador.js';
 import { botonConfirmar } from "./modules/mercado.js";
+import { iniciarEscenaBatalla } from "./modules/batalla.js";
+
 
 
 
@@ -78,8 +80,25 @@ export function mostrarPerfil() {
     slotsPerfil.forEach(slot => slot.innerHTML = "");
     jugador.inventario.forEach((producto, indice) => {
         if (slotsPerfil[indice]) {
-            slotsPerfil[indice].innerHTML = `<img src="${producto.imagen}" style="width:80%; height:80%; object-fit:contain;">`;
+            slotsPerfil[indice].innerHTML = `<img src="${producto.imagen}" style="width:100%; height:100%; object-fit:contain;">`;
         }
     });
 }
 
+
+const btnIrBatalla = document.getElementById('btn-ir-batalla');
+
+if (btnIrBatalla) {
+    btnIrBatalla.addEventListener('click', () => {
+        const escena3 = document.getElementById('escena-3');
+        const escena4 = document.getElementById('escena-4');
+
+        if (escena3 && escena4) {
+            escena3.classList.add('oculto');
+            escena4.classList.remove('oculto');
+            
+          
+            iniciarEscenaBatalla();
+        }
+    });
+}

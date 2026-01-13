@@ -64,41 +64,72 @@
             </div>
         </section>
 
-      <section id="escena-3" class="escena oculto">
-    <h1>Tu Perfil</h1>
-    
-    <div id="tarjeta-jugador" class="perfil-info"></div>
+        <section id="escena-3" class="escena oculto">
+            <h1>Tu Perfil</h1>
 
-    <div class="seccion-inventario">
-        <h3>Tu Equipo</h3>
-        <div id="inventario-perfil" class="grid-inventario">
-            <div class="slot"></div>
-            <div class="slot"></div>
-            <div class="slot"></div>
-            <div class="slot"></div>
-            <div class="slot"></div>
-            <div class="slot"></div>
-        </div>
-    </div>
+            <div id="tarjeta-jugador" class="perfil-info"></div>
 
-    <button id="btn-ir-batalla">Ir a los Combates</button>
-</section>
+            <div class="seccion-inventario">
+                <h3>Tu Equipo</h3>
+                <div id="inventario-perfil" class="grid-inventario">
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                </div>
+            </div>
+
+            <button id="btn-ir-batalla">Ir a los Combates</button>
+        </section>
 
         <section id="escena-4" class="escena oculto">
-            <h1>¡Batalla!</h1>
-            <div id="pantalla-combate">
+            <h2>Enemigos</h2>
+
+            <div id="contenedor-enemigos" class="grid-enemigos"></div>
+
+            <div class="barra-inferior-combate">
+                <div id="inventario-combate" class="grid-inventario">
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                </div>
             </div>
-            <p id="log-combate"></p>
-            <button id="btn-siguiente-combate" class="oculto">Siguiente Rival</button>
+       <button id="btn-luchar">Luchar</button>
         </section>
 
         <section id="escena-5" class="escena oculto">
-            <h1>Resultado de la Gesta</h1>
-            <h2 id="resultado-rango"></h2>
-            <p>Puntos finales: <span id="puntos-finales"></span></p>
-            <button id="btn-mostrar-ranking">Ver Ranking en Consola</button> <button
-                onclick="location.reload()">Reiniciar Partida</button>
-        </section>
+    <h2>Combates</h2>
+    <div class="enfrentamiento">
+        <div class="combatiente">
+            <img id="img-jugador-combate" src="" alt="Tu Vikingo">
+            <p id="nombre-jugador-combate"></p>
+        </div>
+        <div class="vs">VS</div>
+        <div class="combatiente">
+            <img id="img-enemigo-combate" src="" alt="Enemigo">
+            <p id="nombre-enemigo-combate"></p>
+        </div>
+    </div>
+
+    <div id="resultado-combate" class="resultado-box oculto">
+        <h3 id="ganador-texto"></h3>
+        <p id="puntos-ganados"></p>
+        <button id="btn-continuar-ranking" class="btn-amarillo">Continuar</button>
+    </div>
+
+    <div class="barra-inferior-combate">
+        <div class="saco-dinero-pequeno">
+            <img src="img/monedero.png" alt="Saco" style="width: 40px;">
+            <span id="dinero-combate-5">0</span>
+        </div>
+        <div id="inventario-combate-5" class="grid-inventario"></div>
+    </div>
+</section>
 
     </div>
 

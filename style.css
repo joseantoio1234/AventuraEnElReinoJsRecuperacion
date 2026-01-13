@@ -197,3 +197,154 @@ button:hover{
     transform: translateY(-10px) scale(1.1);
 }
 
+/* escena 3 */
+.stats-finales p{
+    font-size: 1.5rem;
+    margin: 10px;
+}
+
+#inventario-perfil .slot {
+    width: 100px; 
+    height: 70px; 
+    max-width: 100px;
+
+}
+
+/* Ajustar el contenedor para que los cuadros no se peguen */
+.grid-inventario {
+    display: flex;
+    justify-content: center;
+    gap: 10px;    /* Espacio entre cuadros */
+    margin-top: 20px;
+    
+}
+
+
+/* --- ESCENA 4: BATALLA --- */
+
+/* Contenedor principal de las cartas */
+.grid-enemigos {
+    display: flex;
+    justify-content: center; 
+    align-items: flex-start;
+    gap: 20px;              
+    padding: 40px 20px;
+    flex-wrap: wrap;         
+}
+
+/* Estilo de cada carta de enemigo */
+.carta-enemigo {
+    background-color: #fdfdfd;
+    border: 4px solid #5d2e17;
+    border-radius: 15px;
+    width: 180px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+}
+
+.carta-enemigo:hover {
+    transform: translateY(-5px); /* Efecto al pasar el ratón */
+}
+
+.carta-enemigo img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover; /* Para que las fotos de enemigos no se deformen */
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+}
+
+.carta-enemigo h3 {
+    margin: 10px 0 5px 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.carta-enemigo p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Botón de Luchar */
+.btn-luchar {
+    background-color: #f1c40f;
+    border: none;
+    padding: 8px 15px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.btn-luchar:hover {
+    background-color: #d4ac0d;
+}
+
+.saco-dinero span {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+
+.seccion-inventario {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.grid-inventario {
+    display: flex;
+    gap: 10px;
+    background-color: #5d4037; 
+    padding: 10px;
+    border: 2px solid #d4a356;
+}
+
+.slot {
+    width: 90px;
+    height: 90px;
+    padding: 15px;
+    background-color: #8b4513;
+    border: 1px solid #3e2723;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #ffd700;
+}
+
+/* escena 5 */
+.enfrentamiento {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    margin-top: 50px;
+}
+
+.combatiente img {
+    width: 250px; /* Tamaño grande para el duelo */
+    height: 250px;
+    object-fit: cover;
+    border: 5px solid #5d2e17;
+}
+
+.vs {
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+}
+
+.resultado-box {
+    text-align: center;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    width: 300px;
+    margin: 20px auto;
+}
