@@ -19,8 +19,8 @@ import { Enemigo, Jefe } from './enemigo.js';
 export const LISTA_ENEMIGOS = [
     new Enemigo("Bandido", "img/templario.png", 6, 50),
     new Enemigo("Lobo", "img/zorro.png", 9, 60),
-    new Enemigo("Mago", "img/monst.png", 7, 40),
-    new Enemigo("Orco", "img/oso.png", 12, 80),
-    new Enemigo("Orangutan", "img/oso.png", 22,80 ),
-    new Jefe("Dragón", "img/monst.png", 28, 200) 
+    new Enemigo("Monster", "img/monst.png", 7, 40),
+    new Enemigo("Orco", "img/orco.png", 12, 80),
+    new Enemigo("Orangutan", "img/orangutan.png", 22,80 ),
+    new Jefe("Dragón", "img/dragon.png", 28, 200) 
 ];
