@@ -1,11 +1,7 @@
 import { validarNombre, validarPuntos } from "./modules/utils.js";
-import { pintarProductos } from './modules/mercado.js';
+import { pintarProductos, botonConfirmar } from './modules/mercado.js';
 import { Jugador } from './modules/jugador.js';
-import { botonConfirmar } from "./modules/mercado.js";
 import { iniciarEscenaBatalla } from "./modules/batalla.js";
-
-
-
 
 const formulario = document.getElementById('form-jugador');
 const errorTexto = document.getElementById('error-msg');
@@ -13,56 +9,83 @@ const dineroDisplay = document.getElementById('dinero-display');
 
 window.jugadorLogueado = null;
 
-// formulario
-formulario.addEventListener('submit', (evento) => {
-    evento.preventDefault();
+// FORMULARIO (ESCENA 1)
+if (formulario) {
+    formulario.addEventListener('submit', (evento) => {
+        evento.preventDefault();
 
-    const nombre = document.getElementById('nombre-input').value;
-    const atq = document.getElementById('atq-input').value;
-    const def = document.getElementById('def-input').value;
-    const vida = document.getElementById('vida-input').value;
+        const nombre = document.getElementById('nombre-input').value;
+        const atq = document.getElementById('atq-input').value;
+        const def = document.getElementById('def-input').value;
+        const vida = document.getElementById('vida-input').value;
 
-    // regex
-    if (!validarNombre(nombre)){
-        errorTexto.textContent = "Nombre incorrecto, empezar por mayuscula (20 caracteres max).";
-        return;
-    }
+        if (!validarNombre(nombre)){
+            errorTexto.textContent = "Nombre incorrecto, empezar por mayuscula (20 caracteres max).";
+            return;
+        }
 
-    if (!validarPuntos(atq, def, vida)) {
-        errorTexto.textContent = "La suma de los puntos max 110 (vida 100p min).";
-        return;
-    }
+        if (!validarPuntos(atq, def, vida)) {
+            errorTexto.textContent = "La suma de los puntos max 110 (vida 100p min).";
+            return;
+        }
 
-    errorTexto.textContent = "";
+        errorTexto.textContent = "";
 
-    const rutaImagen = "img/jugadorvikingo.png";
-    window.jugadorLogueado = new Jugador(nombre, atq, def, vida, rutaImagen);
+        const rutaImagen = "img/jugadorvikingo.png";
+        // Convertimos a Number para evitar errores en combate
+        window.jugadorLogueado = new Jugador(nombre, Number(atq), Number(def), Number(vida), rutaImagen);
 
-    // cambio de escena
-    const escena1 = document.getElementById('escena-1');
-    const escena2 = document.getElementById('escena-2');
-   
+        // NAVEGACIÓN: De 1 a 1.5
+        document.getElementById('escena-1').classList.add('oculto');
+        document.getElementById('escena-1.5').classList.remove('oculto');
 
-    if (escena1 && escena2) {
-        escena1.classList.add('oculto');
-        escena2.classList.remove('oculto');
+        pintarPreviaPerfil(); 
+    });
+}
 
-        // dinero
-        if (dineroDisplay){
+// FUNCIÓN PARA PINTAR LOS DATOS (ESCENA 1.5)
+function pintarPreviaPerfil() {
+    const contenedor = document.getElementById('tarjeta-previa');
+    const jugador = window.jugadorLogueado;
+
+    if (!jugador || !contenedor) return;
+
+    // Estilo idéntico a tu perfil pero sin inventario
+    contenedor.innerHTML = `
+        <img src="${jugador.imagen}" alt="Vikingo" style="width: 120px; border-radius: 10px; display:block; margin: 0 auto;">
+        <div class="stats-finales" style="text-align: center; margin-top: 15px;">
+            <p><strong>Nombre:</strong> ${jugador.nombre}</p>
+            <p><strong>Ataque Inicial:</strong> ${jugador.atq}</p>
+            <p><strong>Defensa Inicial:</strong> ${jugador.def}</p>
+            <p><strong>Vida:</strong> ${jugador.vida}</p>
+        </div>
+    `;
+}
+
+// BOTÓN IR AL MERCADO (ESCENA 1.5 a 2)
+// Cambiamos el ID para que coincida con tu HTML
+const btnIrMercado = document.getElementById('btn-ir-mercado');
+if (btnIrMercado) {
+    btnIrMercado.addEventListener('click', () => {
+        document.getElementById('escena-1.5').classList.add('oculto');
+        document.getElementById('escena-2').classList.remove('oculto');
+
+        if (dineroDisplay) {
             dineroDisplay.textContent = window.jugadorLogueado.dinero;
         }
 
         pintarProductos();
         botonConfirmar();
-    } 
-});
+    });
+}
 
+// MOSTRAR PERFIL DEFINITIVO (ESCENA 3)
 export function mostrarPerfil() {
     const contenedor = document.getElementById('tarjeta-jugador');
     const slotsPerfil = document.querySelectorAll('#inventario-perfil .slot');
     const jugador = window.jugadorLogueado;
 
-    if (!jugador) return;
+    if (!jugador || !contenedor) return;
     
     contenedor.innerHTML = `
         <div class="detalles-vikingo">
@@ -76,7 +99,6 @@ export function mostrarPerfil() {
         </div>
     `;
 
-    // rellena inventario
     slotsPerfil.forEach(slot => slot.innerHTML = "");
     jugador.inventario.forEach((producto, indice) => {
         if (slotsPerfil[indice]) {
@@ -85,9 +107,8 @@ export function mostrarPerfil() {
     });
 }
 
-
+// BOTÓN IR A BATALLA (ESCENA 3 a 4) - SOLUCIÓN AL ERROR
 const btnIrBatalla = document.getElementById('btn-ir-batalla');
-
 if (btnIrBatalla) {
     btnIrBatalla.addEventListener('click', () => {
         const escena3 = document.getElementById('escena-3');
@@ -96,9 +117,7 @@ if (btnIrBatalla) {
         if (escena3 && escena4) {
             escena3.classList.add('oculto');
             escena4.classList.remove('oculto');
-            
-          
-            iniciarEscenaBatalla();
+            iniciarEscenaBatalla(); 
         }
     });
 }

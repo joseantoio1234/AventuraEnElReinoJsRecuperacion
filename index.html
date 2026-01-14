@@ -43,7 +43,17 @@
                 <p id="error-msg" class="texto-error"></p>
                 <button type="submit">Crear y Continuar</button>
             </form>
+
         </section>
+        
+   <section id="escena-1.5" class="escena oculto">
+    <h1>Tu Perfil Inicial</h1>
+    <div id="tarjeta-previa" class="perfil-info"></div> 
+    
+    <div class="botones-centrados">
+        <button id="btn-ir-mercado" class="btn-amarillo">Ir al Mercado</button>
+    </div>
+</section>
 
         <section id="escena-2" class="escena oculto">
             <h1>Mercado Negro</h1>
@@ -99,37 +109,95 @@
                     <div class="slot"></div>
                 </div>
             </div>
-       <button id="btn-luchar">Luchar</button>
+            <button id="btn-luchar">Luchar</button>
         </section>
 
         <section id="escena-5" class="escena oculto">
-    <h2>Combates</h2>
-    <div class="enfrentamiento">
-        <div class="combatiente">
-            <img id="img-jugador-combate" src="" alt="Tu Vikingo">
-            <p id="nombre-jugador-combate"></p>
-        </div>
-        <div class="vs">VS</div>
-        <div class="combatiente">
-            <img id="img-enemigo-combate" src="" alt="Enemigo">
-            <p id="nombre-enemigo-combate"></p>
-        </div>
-    </div>
+            <h2>Combates</h2>
 
-    <div id="resultado-combate" class="resultado-box oculto">
-        <h3 id="ganador-texto"></h3>
-        <p id="puntos-ganados"></p>
-        <button id="btn-continuar-ranking" class="btn-amarillo">Continuar</button>
-    </div>
+            <div class="enfrentamiento">
+                <div class="combatiente">
+                    <img id="img-jugador-combate" src="" alt="Tu Vikingo">
+                    <p id="nombre-jugador-combate"></p>
+                </div>
+                <div class="vs">VS</div>
+                <div class="combatiente">
+                    <img id="img-enemigo-combate" src="" alt="Enemigo">
+                    <p id="nombre-enemigo-combate"></p>
+                </div>
+            </div>
 
-    <div class="barra-inferior-combate">
-        <div class="saco-dinero-pequeno">
-            <img src="img/monedero.png" alt="Saco" style="width: 40px;">
-            <span id="dinero-combate-5">0</span>
-        </div>
-        <div id="inventario-combate-5" class="grid-inventario"></div>
-    </div>
-</section>
+            <div id="resultado-combate" class="resultado-box oculto">
+                <h3 id="ganador-texto"></h3>
+                <p id="puntos-ganados"></p>
+                <button id="btn-continuar-ranking" class="btn-amarillo">Continuar</button>
+            </div>
+
+            <div class="barra-inferior-combate">
+                <div id="inventario-combate-5" class="grid-inventario">
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="escena-6" class="escena oculto">
+            <div class="resultado-final-contenedor">
+                <h1 id="rango-final"></h1>
+                <p class="texto-puntos">Puntos totales: <span id="puntos-finales-display">0</span></p>
+
+                <button id="btn-ver-ranking" class="btn-amarillo">Ver clasificación</button>
+            </div>
+
+            <div class="barra-inferior-combate">
+                <div id="inventario-final" class="grid-inventario">
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="escena-7" class="escena oculto">
+            <h1>Clasificación de Héroes</h1>
+
+            <div class="tabla-contenedor">
+                <table id="tabla-ranking">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Puntos</th>
+                            <th>Dinero</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo-ranking"></tbody>
+                </table>
+            </div>
+
+            <button id="btn-reiniciar" class="btn-amarillo">Reiniciar</button>
+
+            <div class="barra-inferior-combate">
+                <div class="saco-dinero-pequeno">
+
+                </div>
+                <div id="inventario-ranking" class="grid-inventario">
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                    <div class="slot"></div>
+                </div>
+            </div>
+        </section>
+
 
     </div>
 
