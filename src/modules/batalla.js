@@ -123,7 +123,7 @@ function mostrarPantallaFinal() {
 
     puntosDisplay.textContent = jugador.puntos;
 
-    if (jugador.puntos >= 400) {
+    if (jugador.puntos >= 200) {
         rangoTexto.textContent = "El Jugador ha logrado ser un PRO";
     } else {
         rangoTexto.textContent = "El Jugador ha resultado ser un Rookie";
