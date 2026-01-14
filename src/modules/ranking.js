@@ -3,15 +3,15 @@ export function mostrarRankingFinal() {
     const tabla = document.getElementById('cuerpo-ranking');
     const dineroFinal = document.getElementById('dinero-ranking-final');
 
-    // 1. Actualizar barra inferior
+    // actualiza la barra 
     if (dineroFinal) dineroFinal.textContent = jugadorActual.dinero;
     pintarInventarioRanking('#inventario-ranking');
 
-    // 2. GESTIÓN DE PERSISTENCIA: Cargar historial previo o crear uno nuevo
-    // Usamos localStorage para que los datos no se borren al reiniciar
+    
+    // localstorages
     let historialRanking = JSON.parse(localStorage.getItem('rankingHeroes')) || [];
 
-    // 3. Guardar la partida actual en el historial
+    // guardar la partida actual en el historial
     const nuevaPartida = {
         nombre: jugadorActual.nombre,
         puntos: jugadorActual.puntos,
@@ -19,13 +19,13 @@ export function mostrarRankingFinal() {
     };
     historialRanking.push(nuevaPartida);
 
-    // 4. Guardar de nuevo en localStorage para la próxima vez
+    // guarda de nuevo en localStorage
     localStorage.setItem('rankingHeroes', JSON.stringify(historialRanking));
 
-    // 5. Ordenar de mayor a menor puntuación
+    // ordenar de mayor a menor puntuacion
     historialRanking.sort((a, b) => b.puntos - a.puntos);
 
-    // 6. Rellenar la tabla con todas las partidas guardadas
+    // rellena la tabla con todas las partidas guardadas
     if (tabla) {
         tabla.innerHTML = ""; 
         historialRanking.forEach(partida => {
@@ -40,7 +40,7 @@ export function mostrarRankingFinal() {
         });
     }
 
-    // Configurar el botón Reiniciar
+    // boton reiniciar
     const btnReiniciar = document.getElementById('btn-reiniciar');
     if (btnReiniciar) {
         btnReiniciar.onclick = () => location.reload();

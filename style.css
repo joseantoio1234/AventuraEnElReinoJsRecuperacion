@@ -42,10 +42,6 @@ body{
     font-weight: bold;
 }
 
-@keyframes entrar{
-    from { left: -150px};
-}
-
 
 /* imagen del avatar */
 #player-img {
@@ -210,19 +206,18 @@ button:hover{
 
 }
 
-/* Ajustar el contenedor para que los cuadros no se peguen */
 .grid-inventario {
     display: flex;
     justify-content: center;
-    gap: 10px;    /* Espacio entre cuadros */
+    gap: 10px;    
     margin-top: 20px;
     
 }
 
 
-/* --- ESCENA 4: BATALLA --- */
+/* escena 4 */
 
-/* Contenedor principal de las cartas */
+
 .grid-enemigos {
     display: flex;
     justify-content: center; 
@@ -232,7 +227,7 @@ button:hover{
     flex-wrap: wrap;         
 }
 
-/* Estilo de cada carta de enemigo */
+
 .carta-enemigo {
     background-color: #fdfdfd;
     border: 4px solid #5d2e17;
@@ -245,13 +240,13 @@ button:hover{
 }
 
 .carta-enemigo:hover {
-    transform: translateY(-5px); /* Efecto al pasar el ratón */
+    transform: translateY(-5px); /* efecto al pasar el raton */
 }
 
 .carta-enemigo img {
     width: 100%;
     height: 150px;
-    object-fit: cover; /* Para que las fotos de enemigos no se deformen */
+    object-fit: cover;
     border-radius: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -269,7 +264,7 @@ button:hover{
     margin-bottom: 15px;
 }
 
-/* Botón de Luchar */
+
 .btn-luchar {
     background-color: #f1c40f;
     border: none;
@@ -350,7 +345,6 @@ button:hover{
 }
 
 
-
 /* escena 6 */
 .resultado-final-contenedor {
     display: flex;
@@ -373,15 +367,15 @@ button:hover{
 }
 
 #puntos-finales-display {
-    color: #f1c40f; /* Color amarillo para los puntos */
+    color: #f1c40f; 
     font-weight: bold;
 }
 
 
 /* escena 7 */
 .tabla-contenedor {
-    max-height: 400px;
-    overflow-y: auto; /* Permite el scroll que se ve en tu imagen */
+    max-height: 40vh;
+    overflow-y: auto; 
     margin: 20px auto;
     width: 80%;
 }
@@ -389,15 +383,19 @@ button:hover{
 #tabla-ranking {
     width: 100%;
     border-collapse: collapse;
-    background-color: #d2b48c; /* Color arena de fondo */
+    background-color: #d2b48c;
     color: #3e2723;
     font-family: 'Medieval', sans-serif;
+    
 }
 
-#tabla-ranking th {
-    background-color: #ffd700; /* Encabezado amarillo */
+#tabla-ranking  thead th {
+    position: sticky;
+    background-color: #ffd700; 
     padding: 10px;
     border: 2px solid #5d4037;
+    top: 0;
+
 }
 
 #tabla-ranking td {
@@ -407,7 +405,38 @@ button:hover{
 }
 
 #tabla-ranking tr:nth-child(even) {
-    background-color: #c4a484; /* Alternancia de colores para lectura */
+    background-color: #c4a484; 
+    
 }
 
 
+/* animaicones */
+
+/* saquito */
+@keyframes entrar{
+    from { left: -150px};
+}
+
+
+/* jugador */
+@keyframes entradaJugadorDerecha {
+    0% { transform: translateX(500%); } /* Fuera por la derecha */
+    
+    100% { transform: translateX(0); }   /* Vuelve a su sitio */
+}
+
+/* enemigo */
+@keyframes entradaEnemigoIzquierda {
+    0% { transform: translateX(-500%); }
+
+    100% { transform: translateX(0);  }   
+}
+
+
+.animar-entrada-jugador {
+    animation: entradaJugadorDerecha 0.8s;
+}
+
+.animar-entrada-enemigo {
+    animation: entradaEnemigoIzquierda 0.8s;
+}
