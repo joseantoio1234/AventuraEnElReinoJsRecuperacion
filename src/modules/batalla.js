@@ -1,25 +1,19 @@
+/**
+ * @file batalla.js
+ * @description Controla la lógica de los combates, las animaciones de los luchadores y el cálculo de resultados.
+ */
+
 import { LISTA_ENEMIGOS } from './constants.js';
 import { mostrarRankingFinal } from './ranking.js';
 
 let combatesRealizados = 0;
 const MAX_COMBATES = 3;
 
-function lanzarMonedas(){
-    const monedas = [
-        document.getElementById('moneda-1'),
-        document.getElementById('moneda-2'),
-        document.getElementById('moneda-3')
-    ];
-
-    monedas.forEach((moneda) =>{
-        if(moneda){
-            moneda.classList.remove('animar-moneda');
-            void moneda.offsetWidth;
-            moneda.classList.add('animar-moneda');
-        }
-    });
-}
-
+/**
+ * @function actualizarInventarioVisual
+ * @description Dibuja los objetos del jugador en los slots correspondientes de la escena de batalla.
+ * @param {string} selectorPadre - El ID o clase del contenedor donde se encuentran los slots.
+ */
 function actualizarInventarioVisual(selectorPadre) {
     const jugador = window.jugadorLogueado;
     const slots = document.querySelectorAll(`${selectorPadre} .slot`);
@@ -32,6 +26,10 @@ function actualizarInventarioVisual(selectorPadre) {
     });
 }
 
+/**
+ * @function iniciarEscenaBatalla
+ * @description Prepara la escena previa al combate mostrando la lista de posibles enemigos.
+ */
 export function iniciarEscenaBatalla() {
     const contenedor = document.getElementById('contenedor-enemigos');
     const jugador = window.jugadorLogueado;
@@ -63,6 +61,10 @@ export function iniciarEscenaBatalla() {
     }
 }
 
+/**
+ * @function iniciarPelea
+ * @description Ejecuta la lógica del combate por turnos, activa las animaciones y gestiona los puntos ganados.
+ */
 export function iniciarPelea() {
     const jugador = window.jugadorLogueado;
     combatesRealizados++;
@@ -79,7 +81,7 @@ export function iniciarPelea() {
     imgEnemigo.src = enemigo.imagen;
     document.getElementById('nombre-enemigo-combate').textContent = enemigo.nombre;
 
-    // logica de animación
+    // logica de animacion
     imgJugador.classList.remove('animar-entrada-jugador');
     imgEnemigo.classList.remove('animar-entrada-enemigo');
     
@@ -132,7 +134,7 @@ export function iniciarPelea() {
                 mostrarPantallaFinal(); 
 
                 // confeti
-                if (jugador.puntos >= 200) {
+                if (jugador.puntos >= 300) {
                     confetti({
                         particleCount: 150,
                         spread: 70,
@@ -145,6 +147,10 @@ export function iniciarPelea() {
     }
 }
 
+/**
+ * @function mostrarPantallaFinal
+ * @description Muestra el resumen de puntos y el rango alcanzado (PRO o Rookie) antes del ranking.
+ */
 function mostrarPantallaFinal() {
     const jugador = window.jugadorLogueado;
     const rangoTexto = document.getElementById('rango-final');
@@ -152,7 +158,7 @@ function mostrarPantallaFinal() {
 
     puntosDisplay.textContent = jugador.puntos;
 
-    if (jugador.puntos >= 200) {
+    if (jugador.puntos >= 300) {
         rangoTexto.textContent = "El Jugador ha logrado ser un PRO";
     } else {
         rangoTexto.textContent = "El Jugador ha resultado ser un Rookie";

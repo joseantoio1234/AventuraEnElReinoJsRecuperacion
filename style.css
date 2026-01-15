@@ -121,8 +121,8 @@ button:hover{
 
 .tarjeta-producto {
     background-color: #d4a356; 
-    border: 2px solid #8b4513;
-    border-radius: 8px;
+    border: 4px solid #8b4513;
+    border-radius: 15px;
     padding: 20px;
     text-align: center;
     color: black;
@@ -229,7 +229,7 @@ button:hover{
 
 
 .carta-enemigo {
-    background-color: #fdfdfd;
+    background-color: #d4a356;
     border: 4px solid #5d2e17;
     border-radius: 15px;
     width: 180px;
@@ -249,18 +249,17 @@ button:hover{
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
 }
 
 .carta-enemigo h3 {
     margin: 10px 0 5px 0;
     font-size: 1.2rem;
-    color: #333;
+    color: #000000;
 }
 
 .carta-enemigo p {
     font-size: 0.9rem;
-    color: #666;
+    color: #000000;
     margin-bottom: 15px;
 }
 
@@ -463,19 +462,19 @@ button:hover{
     from { left: -150px};
 }
 
-/* icono de mercado  */
-/* Estilo del icono que aparecerá */
+
+/* icono compra */
 .icono-compra {
     position: absolute;
-    color: #ffd700; /* Color oro/amarillo */
+    color: #ffd700; 
     font-weight: bold;
     font-size: 24px;
-    pointer-events: none; /* Para que no interfiera con los clics */
+    pointer-events: none; 
     animation: flotarYDesaparecer 1s ease-out forwards;
     z-index: 1000;
 }
 
-/* La animación: sube 50 píxeles y se vuelve transparente */
+/* icono compra */
 @keyframes flotarYDesaparecer {
     0% {
         transform: translateY(0);
@@ -511,26 +510,150 @@ button:hover{
     animation: entradaEnemigoIzquierda 0.8s;
 }
 
-/* monedas */
 
-@keyframes rotate {
-  0%, 100% {
-    transform: rotateY(0);
+
+/* responsive*/
+/* Tamaños de pantalla: 
+- 360 píxeles de ancho
+- 720 píxeles de ancho
+- 1024 píxeles de ancho */
+
+@media (min-width: 320px) and (max-width: 480px) {
+  body {
+    display: flex;
+    flex-direction: column;
   }
 
-  25% {
-   transform: rotateY(-90deg);
+  h1 {
+    margin: 1rem;
+    text-align: center;
   }
 
-  50% {
-    transform: rotateY(-180deg);
-  }
-  75% {
-    transform: rotateY(-90deg);
-    opacity: 0.85;
+  h2 {
+    padding: 0 1rem 0 1rem;
   }
 
-  100% {
-    opacity: 0;
+  /* Inventario*/
+  #inventory-container {
+    display: grid;
+    /* Grid de dos columnas: repeat(2, 1fr)*/
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+  }
+
+  .item {
+    width: 40vw;
+    height: 40vw;
+  }
+
+  /* Tarjeta jugador */
+  #player-card h2 {
+    font-size: 1.8rem;
+  }
+
+  #player-card {
+    max-width: 92%;
+  }
+
+  #player-photo1,
+  #player-photo3 {
+    flex: 0 0;
+  }
+
+  #player-info .logos img {
+    width: 20%;
+  }
+
+  #player-card .columns {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #player-info {
+    gap: 0.9rem;
+  }
+
+  /* Mercado, enemigos*/
+  #scene-2 #discount {
+    text-align: start;
+  }
+  #scene-2 .market-container,
+  #scene-4 .enemies-container {
+    width: 100vw;
+    height: auto;
+  }
+
+  /* Batallas */
+  #scene-5 #fighters {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #scene-5 #fighters div {
+    max-width: 60%;
+    align-content: center;
+  }
+
+  #scene-5 #fighters #versus {
+    max-width: 30%;
+  }
+
+  #scene-5 .battle-winner {
+    padding: 1rem;
+  }
+
+  /* Ranking */
+  #scene-6 .results-container {
+    margin: auto 1rem;
+  }
+
+  #scene-6 .results-container img {
+    max-width: 80%;
+}
+
+}
+
+@media (min-width: 700px) and (max-width: 1024px) {
+  #player-card h2 {
+    font-size: 1.7rem;
+  }
+
+  #player-card {
+    max-width: 85vw;
+  }
+
+  #player-photo1,
+  #player-photo3 {
+    flex: 0 0 40%;
+  }
+
+  #player-info .logos img {
+    width: 15%;
+  }
+
+  #player-card .columns {
+    padding: 0.5rem;
+  }
+
+  #player-info {
+    gap: 0.9rem;
+  }
+
+  #scene-4 .enemies-container {
+    width: 85vw;
+  }
+
+  #scene-5 .battle-container {
+    padding: 1rem;
+  }
+
+  #scene-5 #fighters div {
+    max-width: 35%;
+  }
+
+  #scene-5 #fighters #versus {
+    max-width: 15%;
   }
 }

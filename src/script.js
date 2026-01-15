@@ -1,3 +1,8 @@
+/**
+ * @file script.js
+ * @description Archivo principal que gestiona el flujo de escenas y el registro del jugador.
+ */
+
 import { validarNombre, validarPuntos } from "./modules/utils.js";
 import { pintarProductos, botonConfirmar } from './modules/mercado.js';
 import { Jugador } from './modules/jugador.js';
@@ -7,10 +12,15 @@ const formulario = document.getElementById('form-jugador');
 const errorTexto = document.getElementById('error-msg');
 const dineroDisplay = document.getElementById('dinero-display');
 
+/** @type {Object|null} Jugador global de la sesión */
 window.jugadorLogueado = null;
 
-// FORMULARIO (ESCENA 1)
+// formulario
 if (formulario) {
+    /**
+     * @description Maneja el registro del jugador y valida sus estadísticas.
+     * @param {Event} evento - Evento de envío del formulario.
+     */
     formulario.addEventListener('submit', (evento) => {
         evento.preventDefault();
 
@@ -32,10 +42,10 @@ if (formulario) {
         errorTexto.textContent = "";
 
         const rutaImagen = "img/jugadorvikingo.png";
-        // Convertimos a Number para evitar errores en combate
+    
         window.jugadorLogueado = new Jugador(nombre, Number(atq), Number(def), Number(vida), rutaImagen);
 
-        // NAVEGACIÓN: De 1 a 1.5
+        // logica de escenas
         document.getElementById('escena-1').classList.add('oculto');
         document.getElementById('escena-1.5').classList.remove('oculto');
 
@@ -43,14 +53,17 @@ if (formulario) {
     });
 }
 
-// FUNCIÓN PARA PINTAR LOS DATOS (ESCENA 1.5)
+/**
+ * @function pintarPreviaPerfil
+ * @description Muestra los datos iniciales del vikingo antes de ir al mercado.
+ */
+// datos
 function pintarPreviaPerfil() {
     const contenedor = document.getElementById('tarjeta-previa');
     const jugador = window.jugadorLogueado;
 
     if (!jugador || !contenedor) return;
 
-    // Estilo idéntico a tu perfil pero sin inventario
     contenedor.innerHTML = `
         <img src="${jugador.imagen}" alt="Vikingo" style="width: 120px; border-radius: 10px; display:block; margin: 0 auto;">
         <div class="stats-finales" style="text-align: center; margin-top: 15px;">
@@ -62,10 +75,12 @@ function pintarPreviaPerfil() {
     `;
 }
 
-// BOTÓN IR AL MERCADO (ESCENA 1.5 a 2)
-// Cambiamos el ID para que coincida con tu HTML
+// boton
 const btnIrMercado = document.getElementById('btn-ir-mercado');
 if (btnIrMercado) {
+    /**
+     * @description Cambia a la escena del mercado y carga los productos.
+     */
     btnIrMercado.addEventListener('click', () => {
         document.getElementById('escena-1.5').classList.add('oculto');
         document.getElementById('escena-2').classList.remove('oculto');
@@ -79,7 +94,11 @@ if (btnIrMercado) {
     });
 }
 
-// MOSTRAR PERFIL DEFINITIVO (ESCENA 3)
+/**
+ * @function mostrarPerfil
+ * @description Actualiza y muestra el perfil del jugador con sus bonus e inventario final.
+ */
+// perfil
 export function mostrarPerfil() {
     const contenedor = document.getElementById('tarjeta-jugador');
     const slotsPerfil = document.querySelectorAll('#inventario-perfil .slot');
@@ -107,9 +126,12 @@ export function mostrarPerfil() {
     });
 }
 
-// BOTÓN IR A BATALLA (ESCENA 3 a 4) - SOLUCIÓN AL ERROR
+// logica de escena
 const btnIrBatalla = document.getElementById('btn-ir-batalla');
 if (btnIrBatalla) {
+    /**
+     * @description Cambia de la vista de perfil a la selección de enemigos.
+     */
     btnIrBatalla.addEventListener('click', () => {
         const escena3 = document.getElementById('escena-3');
         const escena4 = document.getElementById('escena-4');

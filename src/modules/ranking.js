@@ -1,3 +1,12 @@
+/**
+ * @file ranking.js
+ * @description Gestiona el guardado de puntuaciones y la visualización de la tabla de clasificación.
+ */
+
+/**
+ * @function mostrarRankingFinal
+ * @description Guarda la partida actual en el historial y dibuja la tabla de posiciones ordenada.
+ */
 export function mostrarRankingFinal() {
     const jugadorActual = window.jugadorLogueado;
     const tabla = document.getElementById('cuerpo-ranking');
@@ -50,6 +59,11 @@ export function mostrarRankingFinal() {
     }
 }
 
+/**
+ * @function pintarInventarioRanking
+ * @description Muestra visualmente los objetos que el jugador tenía al final de la partida.
+ * @param {string} selector - El ID o clase del contenedor de inventario.
+ */
 function pintarInventarioRanking(selector) {
     const jugador = window.jugadorLogueado;
     const slots = document.querySelectorAll(`${selector} .slot`);

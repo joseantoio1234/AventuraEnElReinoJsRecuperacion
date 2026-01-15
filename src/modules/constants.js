@@ -1,3 +1,13 @@
+/**
+ * @file constants.js
+ * @description Almacena las listas de datos estáticos del juego, como productos y enemigos.
+ */
+
+import { Enemigo, Jefe } from './enemigo.js';
+
+/** * @const {Array<Object>} PRODUCTOS_MERCADO
+ * @description Lista de objetos disponibles para comprar en la tienda con sus atributos y precios.
+ */
 export const PRODUCTOS_MERCADO = [
     { id: 1, nombre: "Hacha de Batalla", tipo: "Arma", bonus: 15 , precio: 50, rareza: "Comun", imagen: "img/hacha.png" },
     { id: 2, nombre: "Espada Runica", tipo: "Arma", bonus: 20, precio: 80, rareza: "Rara", imagen: "img/espada.png" },
@@ -9,13 +19,13 @@ export const PRODUCTOS_MERCADO = [
     { id: 8, nombre: "Pantalones Nevados", tipo: "Armadura", bonus: 60, precio: 180, rareza: "Legendaria", imagen: "img/pantalones.png" },
     { id: 9, nombre: "Manzana Dorada", tipo: "Consumible", bonus: 10, precio: 20, rareza: "Común", imagen: "img/manzana.png" },
     { id: 10, nombre: "Pera Justiciera", tipo: "Consumible", bonus: 20, precio: 40, rareza: "Rara", imagen: "img/pera.png" },
-    { id: 11, nombre: "Platano Curandero", tipo: "Consumible", bonus: 30, precio: 60, rareza: "Rara", imagen: "img/platano.png" },,
+    { id: 11, nombre: "Platano Curandero", tipo: "Consumible", bonus: 30, precio: 60, rareza: "Rara", imagen: "img/platano.png" },
     { id: 12, nombre: "Piña Anacomosus", tipo: "Consumible", bonus: 40, precio: 80, rareza: "Rara", imagen: "img/piña.png" },
 ];
 
-
-import { Enemigo, Jefe } from './enemigo.js';
-
+/** * @const {Array<Enemigo|Jefe>} LISTA_ENEMIGOS
+ * @description Colección de oponentes instanciados que aparecerán aleatoriamente en los combates.
+ */
 export const LISTA_ENEMIGOS = [
     new Enemigo("Bandido", "img/templario.png", 6, 50),
     new Enemigo("Lobo", "img/zorro.png", 9, 60),

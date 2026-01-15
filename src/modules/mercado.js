@@ -1,6 +1,16 @@
+/**
+ * @file mercado.js
+ * @description Gestiona la visualización de productos, la lógica de compra y la animación de confirmación.
+ */
+
 import { mostrarPerfil } from '../script.js';
 import { PRODUCTOS_MERCADO } from './constants.js';
 
+/**
+ * @function animarIconoCompra
+ * @description Crea y anima un icono de verificación en la posición donde el usuario hizo clic.
+ * @param {MouseEvent} evento - El evento del clic para obtener las coordenadas.
+ */
 // animacion de compra
 function animarIconoCompra(evento) {
     const icono = document.createElement('div');
@@ -13,12 +23,15 @@ function animarIconoCompra(evento) {
 
     document.body.appendChild(icono);
 
-
     setTimeout(() => {
         icono.remove();
     }, 1000);
 }
 
+/**
+ * @function pintarProductos
+ * @description Genera visualmente las tarjetas de productos disponibles en el mercado.
+ */
 export function pintarProductos() {
     const contenedor = document.getElementById('contenedor-productos');
     if (!contenedor) return;
@@ -55,6 +68,14 @@ export function pintarProductos() {
     });
 }
 
+/**
+ * @function gestionarCompra
+ * @description Maneja la lógica de añadir o quitar productos del inventario y cobrar el dinero.
+ * @param {Object} producto - Datos del producto.
+ * @param {HTMLElement} tarjeta - Elemento visual de la tarjeta.
+ * @param {HTMLElement} boton - El botón que dispara la acción.
+ * @param {MouseEvent} evento - Evento del clic para la animación.
+ */
 function gestionarCompra(producto, tarjeta, boton, evento) {
     const jugador = window.jugadorLogueado;
     const slots = document.querySelectorAll('.slot');
@@ -72,7 +93,7 @@ function gestionarCompra(producto, tarjeta, boton, evento) {
             return;
         }
 
-        // si se compra se  dispara la animacion
+        // si se compra se dispara la animacion
         animarIconoCompra(evento);
 
         jugador.dinero -= producto.precio;
@@ -108,6 +129,10 @@ function gestionarCompra(producto, tarjeta, boton, evento) {
     }
 }
 
+/**
+ * @function botonConfirmar
+ * @description Configura el botón de confirmar compra para aplicar bonus y cambiar de escena.
+ */
 export function botonConfirmar (){
     const btnConfirmar = document.getElementById('btn-comprar-todo');
     if(!btnConfirmar) return;
