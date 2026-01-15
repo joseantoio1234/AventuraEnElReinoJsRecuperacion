@@ -63,14 +63,12 @@ export function iniciarPelea() {
     imgEnemigo.src = enemigo.imagen;
     document.getElementById('nombre-enemigo-combate').textContent = enemigo.nombre;
 
-//    logica de animacion
+    // logica de animación
     imgJugador.classList.remove('animar-entrada-jugador');
     imgEnemigo.classList.remove('animar-entrada-enemigo');
     
-    //  reinicia la animacion 
-    void imgJugador.offsetWidth; 
+    void imgJugador.offsetWidth; // reinicia la animacion 
 
-    
     imgJugador.classList.add('animar-entrada-jugador');
     imgEnemigo.classList.add('animar-entrada-enemigo');
 
@@ -99,18 +97,31 @@ export function iniciarPelea() {
         boxResultado.classList.remove('oculto');
         document.getElementById('ganador-texto').textContent = `Ganador: ${ganador}`;
         document.getElementById('puntos-ganados').textContent = `Puntos ganados: ${puntos}`;
-    }, );
+    }, 0);
 
     const btnContinuar = document.getElementById('btn-continuar-ranking');
     if (btnContinuar) {
         btnContinuar.onclick = () => {
             boxResultado.classList.add('oculto');
+            
             if (combatesRealizados < MAX_COMBATES) {
                 iniciarPelea();
             } else {
+            
                 document.getElementById('escena-5').classList.add('oculto');
                 document.getElementById('escena-6').classList.remove('oculto');
+                
                 mostrarPantallaFinal(); 
+
+                // confeti
+                if (jugador.puntos >= 200) {
+                    confetti({
+                        particleCount: 150,
+                        spread: 70,
+                        origin: { y: 0.6 },
+                        zIndex: 999
+                    });
+                }
             }
         };
     }
