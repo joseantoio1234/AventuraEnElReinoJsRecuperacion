@@ -3,15 +3,14 @@ export function mostrarRankingFinal() {
     const tabla = document.getElementById('cuerpo-ranking');
     const dineroFinal = document.getElementById('dinero-ranking-final');
 
-    // actualiza la barra 
+    // actualiza la barra superior de la escena
     if (dineroFinal) dineroFinal.textContent = jugadorActual.dinero;
     pintarInventarioRanking('#inventario-ranking');
 
-    
-    // localstorages
+    // localstorage
     let historialRanking = JSON.parse(localStorage.getItem('rankingHeroes')) || [];
 
-    // guardar la partida actual en el historial
+    // guardar la partida historial
     const nuevaPartida = {
         nombre: jugadorActual.nombre,
         puntos: jugadorActual.puntos,
@@ -22,10 +21,14 @@ export function mostrarRankingFinal() {
     // guarda de nuevo en localStorage
     localStorage.setItem('rankingHeroes', JSON.stringify(historialRanking));
 
-    // ordenar de mayor a menor puntuacion
     historialRanking.sort((a, b) => b.puntos - a.puntos);
 
-    // rellena la tabla con todas las partidas guardadas
+
+    console.log("%cRanking ");
+    console.table(historialRanking); 
+  
+
+   
     if (tabla) {
         tabla.innerHTML = ""; 
         historialRanking.forEach(partida => {
@@ -40,7 +43,7 @@ export function mostrarRankingFinal() {
         });
     }
 
-    // boton reiniciar
+    // boton reiniciar 
     const btnReiniciar = document.getElementById('btn-reiniciar');
     if (btnReiniciar) {
         btnReiniciar.onclick = () => location.reload();
