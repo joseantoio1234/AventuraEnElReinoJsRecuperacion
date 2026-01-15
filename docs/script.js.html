@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: script.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: script.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file script.js
+ * @description Archivo principal que gestiona el flujo de escenas y el registro del jugador.
+ */
+
+import { validarNombre, validarPuntos } from "./modules/utils.js";
+import { pintarProductos, botonConfirmar } from './modules/mercado.js';
+import { Jugador } from './modules/jugador.js';
+import { iniciarEscenaBatalla } from "./modules/batalla.js";
+
+const formulario = document.getElementById('form-jugador');
+const errorTexto = document.getElementById('error-msg');
+const dineroDisplay = document.getElementById('dinero-display');
+
+/** @type {Object|null} Jugador global de la sesión */
+window.jugadorLogueado = null;
+
+// formulario
+if (formulario) {
+    /**
+     * @description Maneja el registro del jugador y valida sus estadísticas.
+     * @param {Event} evento - Evento de envío del formulario.
+     */
+    formulario.addEventListener('submit', (evento) => {
+        evento.preventDefault();
+
+        const nombre = document.getElementById('nombre-input').value;
+        const atq = document.getElementById('atq-input').value;
+        const def = document.getElementById('def-input').value;
+        const vida = document.getElementById('vida-input').value;
+
+        if (!validarNombre(nombre)){
+            errorTexto.textContent = "Nombre incorrecto, empezar por mayuscula (20 caracteres max).";
+            return;
+        }
+
+        if (!validarPuntos(atq, def, vida)) {
+            errorTexto.textContent = "La suma de los puntos max 110 (vida 100p min).";
+            return;
+        }
+
+        errorTexto.textContent = "";
+
+        const rutaImagen = "img/jugadorvikingo.png";
+    
+        window.jugadorLogueado = new Jugador(nombre, Number(atq), Number(def), Number(vida), rutaImagen);
+
+        // logica de escenas
+        document.getElementById('escena-1').classList.add('oculto');
+        document.getElementById('escena-1.5').classList.remove('oculto');
+
+        pintarPreviaPerfil(); 
+    });
+}
+
+/**
+ * @function pintarPreviaPerfil
+ * @description Muestra los datos iniciales del vikingo antes de ir al mercado.
+ */
+// datos
+function pintarPreviaPerfil() {
+    const contenedor = document.getElementById('tarjeta-previa');
+    const jugador = window.jugadorLogueado;
+
+    if (!jugador || !contenedor) return;
+
+    contenedor.innerHTML = `
+        &lt;img src="${jugador.imagen}" alt="Vikingo" style="width: 120px; border-radius: 10px; display:block; margin: 0 auto;">
+        &lt;div class="stats-finales" style="text-align: center; margin-top: 15px;">
+            &lt;p>&lt;strong>Nombre:&lt;/strong> ${jugador.nombre}&lt;/p>
+            &lt;p>&lt;strong>Ataque Inicial:&lt;/strong> ${jugador.atq}&lt;/p>
+            &lt;p>&lt;strong>Defensa Inicial:&lt;/strong> ${jugador.def}&lt;/p>
+            &lt;p>&lt;strong>Vida:&lt;/strong> ${jugador.vida}&lt;/p>
+        &lt;/div>
+    `;
+}
+
+// boton
+const btnIrMercado = document.getElementById('btn-ir-mercado');
+if (btnIrMercado) {
+    /**
+     * @description Cambia a la escena del mercado y carga los productos.
+     */
+    btnIrMercado.addEventListener('click', () => {
+        document.getElementById('escena-1.5').classList.add('oculto');
+        document.getElementById('escena-2').classList.remove('oculto');
+
+        if (dineroDisplay) {
+            dineroDisplay.textContent = window.jugadorLogueado.dinero;
+        }
+
+        pintarProductos();
+        botonConfirmar();
+    });
+}
+
+/**
+ * @function mostrarPerfil
+ * @description Actualiza y muestra el perfil del jugador con sus bonus e inventario final.
+ */
+// perfil
+export function mostrarPerfil() {
+    const contenedor = document.getElementById('tarjeta-jugador');
+    const slotsPerfil = document.querySelectorAll('#inventario-perfil .slot');
+    const jugador = window.jugadorLogueado;
+
+    if (!jugador || !contenedor) return;
+    
+    contenedor.innerHTML = `
+        &lt;div class="detalles-vikingo">
+            &lt;img src="${jugador.imagen}" alt="Vikingo" style="width: 100px; height: auto; border-radius: 10px;">
+            &lt;div class="stats-finales">
+                &lt;p>&lt;strong>Nombre:&lt;/strong> ${jugador.nombre}&lt;/p>
+                &lt;p>&lt;strong>Ataque Total:&lt;/strong> ${jugador.atq}&lt;/p> 
+                &lt;p>&lt;strong>Defensa Total:&lt;/strong> ${jugador.def}&lt;/p>
+                &lt;p>&lt;strong>Vida:&lt;/strong> ${jugador.vida}&lt;/p>
+            &lt;/div>
+        &lt;/div>
+    `;
+
+    slotsPerfil.forEach(slot => slot.innerHTML = "");
+    jugador.inventario.forEach((producto, indice) => {
+        if (slotsPerfil[indice]) {
+            slotsPerfil[indice].innerHTML = `&lt;img src="${producto.imagen}" style="width:100%; height:100%; object-fit:contain;">`;
+        }
+    });
+}
+
+// logica de escena
+const btnIrBatalla = document.getElementById('btn-ir-batalla');
+if (btnIrBatalla) {
+    /**
+     * @description Cambia de la vista de perfil a la selección de enemigos.
+     */
+    btnIrBatalla.addEventListener('click', () => {
+        const escena3 = document.getElementById('escena-3');
+        const escena4 = document.getElementById('escena-4');
+
+        if (escena3 &amp;&amp; escena4) {
+            escena3.classList.add('oculto');
+            escena4.classList.remove('oculto');
+            iniciarEscenaBatalla(); 
+        }
+    });
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Enemigo.html">Enemigo</a></li><li><a href="Enemigo_Enemigo.html">Enemigo</a></li><li><a href="Jefe.html">Jefe</a></li><li><a href="Jefe_Enemigo.html">Enemigo</a></li><li><a href="Jefe_Jefe.html">Jefe</a></li><li><a href="Jugador.html">Jugador</a></li><li><a href="Jugador_Jugador.html">Jugador</a></li><li><a href="Producto.html">Producto</a></li><li><a href="Producto_Producto.html">Producto</a></li></ul><h3>Global</h3><ul><li><a href="global.html#LISTA_ENEMIGOS">LISTA_ENEMIGOS</a></li><li><a href="global.html#PRODUCTOS_MERCADO">PRODUCTOS_MERCADO</a></li><li><a href="global.html#actualizarInventarioVisual">actualizarInventarioVisual</a></li><li><a href="global.html#animarIconoCompra">animarIconoCompra</a></li><li><a href="global.html#botonConfirmar">botonConfirmar</a></li><li><a href="global.html#calcularPuntosRecompensa">calcularPuntosRecompensa</a></li><li><a href="global.html#comprarObjeto">comprarObjeto</a></li><li><a href="global.html#gestionarCompra">gestionarCompra</a></li><li><a href="global.html#iniciarEscenaBatalla">iniciarEscenaBatalla</a></li><li><a href="global.html#iniciarPelea">iniciarPelea</a></li><li><a href="global.html#mostrarPantallaFinal">mostrarPantallaFinal</a></li><li><a href="global.html#mostrarPerfil">mostrarPerfil</a></li><li><a href="global.html#mostrarRankingFinal">mostrarRankingFinal</a></li><li><a href="global.html#pintarInventarioRanking">pintarInventarioRanking</a></li><li><a href="global.html#pintarPreviaPerfil">pintarPreviaPerfil</a></li><li><a href="global.html#pintarProductos">pintarProductos</a></li><li><a href="global.html#puedeComprar">puedeComprar</a></li><li><a href="global.html#validarNombre">validarNombre</a></li><li><a href="global.html#validarPuntos">validarPuntos</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Jan 15 2026 14:47:30 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

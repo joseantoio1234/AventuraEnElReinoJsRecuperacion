@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: modules/ranking.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: modules/ranking.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file ranking.js
+ * @description Gestiona el guardado de puntuaciones y la visualización de la tabla de clasificación.
+ */
+
+/**
+ * @function mostrarRankingFinal
+ * @description Guarda la partida actual en el historial y dibuja la tabla de posiciones ordenada.
+ */
+export function mostrarRankingFinal() {
+    const jugadorActual = window.jugadorLogueado;
+    const tabla = document.getElementById('cuerpo-ranking');
+    const dineroFinal = document.getElementById('dinero-ranking-final');
+
+    // actualiza la barra superior de la escena
+    if (dineroFinal) dineroFinal.textContent = jugadorActual.dinero;
+    pintarInventarioRanking('#inventario-ranking');
+
+    // localstorage
+    let historialRanking = JSON.parse(localStorage.getItem('rankingHeroes')) || [];
+
+    // guardar la partida historial
+    const nuevaPartida = {
+        nombre: jugadorActual.nombre,
+        puntos: jugadorActual.puntos,
+        dinero: jugadorActual.dinero
+    };
+    historialRanking.push(nuevaPartida);
+
+    // guarda de nuevo en localStorage
+    localStorage.setItem('rankingHeroes', JSON.stringify(historialRanking));
+
+    historialRanking.sort((a, b) => b.puntos - a.puntos);
+
+
+    console.log("%cRanking ");
+    console.table(historialRanking); 
+  
+
+   
+    if (tabla) {
+        tabla.innerHTML = ""; 
+        historialRanking.forEach(partida => {
+            const fila = `
+                &lt;tr>
+                    &lt;td>${partida.nombre}&lt;/td>
+                    &lt;td>${partida.puntos}&lt;/td>
+                    &lt;td>${partida.dinero}&lt;/td>
+                &lt;/tr>
+            `;
+            tabla.innerHTML += fila;
+        });
+    }
+
+    // boton reiniciar 
+    const btnReiniciar = document.getElementById('btn-reiniciar');
+    if (btnReiniciar) {
+        btnReiniciar.onclick = () => location.reload();
+    }
+}
+
+/**
+ * @function pintarInventarioRanking
+ * @description Muestra visualmente los objetos que el jugador tenía al final de la partida.
+ * @param {string} selector - El ID o clase del contenedor de inventario.
+ */
+function pintarInventarioRanking(selector) {
+    const jugador = window.jugadorLogueado;
+    const slots = document.querySelectorAll(`${selector} .slot`);
+    slots.forEach((slot, i) => {
+        slot.innerHTML = ""; 
+        if (jugador.inventario[i]) {
+            slot.innerHTML = `&lt;img src="${jugador.inventario[i].imagen}" style="width:100%; height:100%; object-fit:contain;">`;
+        }
+    });
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Enemigo.html">Enemigo</a></li><li><a href="Enemigo_Enemigo.html">Enemigo</a></li><li><a href="Jefe.html">Jefe</a></li><li><a href="Jefe_Enemigo.html">Enemigo</a></li><li><a href="Jefe_Jefe.html">Jefe</a></li><li><a href="Jugador.html">Jugador</a></li><li><a href="Jugador_Jugador.html">Jugador</a></li><li><a href="Producto.html">Producto</a></li><li><a href="Producto_Producto.html">Producto</a></li></ul><h3>Global</h3><ul><li><a href="global.html#LISTA_ENEMIGOS">LISTA_ENEMIGOS</a></li><li><a href="global.html#PRODUCTOS_MERCADO">PRODUCTOS_MERCADO</a></li><li><a href="global.html#actualizarInventarioVisual">actualizarInventarioVisual</a></li><li><a href="global.html#animarIconoCompra">animarIconoCompra</a></li><li><a href="global.html#botonConfirmar">botonConfirmar</a></li><li><a href="global.html#calcularPuntosRecompensa">calcularPuntosRecompensa</a></li><li><a href="global.html#comprarObjeto">comprarObjeto</a></li><li><a href="global.html#gestionarCompra">gestionarCompra</a></li><li><a href="global.html#iniciarEscenaBatalla">iniciarEscenaBatalla</a></li><li><a href="global.html#iniciarPelea">iniciarPelea</a></li><li><a href="global.html#mostrarPantallaFinal">mostrarPantallaFinal</a></li><li><a href="global.html#mostrarPerfil">mostrarPerfil</a></li><li><a href="global.html#mostrarRankingFinal">mostrarRankingFinal</a></li><li><a href="global.html#pintarInventarioRanking">pintarInventarioRanking</a></li><li><a href="global.html#pintarPreviaPerfil">pintarPreviaPerfil</a></li><li><a href="global.html#pintarProductos">pintarProductos</a></li><li><a href="global.html#puedeComprar">puedeComprar</a></li><li><a href="global.html#validarNombre">validarNombre</a></li><li><a href="global.html#validarPuntos">validarPuntos</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu Jan 15 2026 14:47:30 GMT+0100 (hora estándar de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
