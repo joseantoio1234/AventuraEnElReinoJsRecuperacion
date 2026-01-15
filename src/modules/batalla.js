@@ -4,6 +4,22 @@ import { mostrarRankingFinal } from './ranking.js';
 let combatesRealizados = 0;
 const MAX_COMBATES = 3;
 
+function lanzarMonedas(){
+    const monedas = [
+        document.getElementById('moneda-1'),
+        document.getElementById('moneda-2'),
+        document.getElementById('moneda-3')
+    ];
+
+    monedas.forEach((moneda) =>{
+        if(moneda){
+            moneda.classList.remove('animar-moneda');
+            void moneda.offsetWidth;
+            moneda.classList.add('animar-moneda');
+        }
+    });
+}
+
 function actualizarInventarioVisual(selectorPadre) {
     const jugador = window.jugadorLogueado;
     const slots = document.querySelectorAll(`${selectorPadre} .slot`);
@@ -71,6 +87,8 @@ export function iniciarPelea() {
 
     imgJugador.classList.add('animar-entrada-jugador');
     imgEnemigo.classList.add('animar-entrada-enemigo');
+
+    
 
     let vidaJ = jugador.vida;
     let vidaE = enemigo.vida;

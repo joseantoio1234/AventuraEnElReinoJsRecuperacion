@@ -1,6 +1,24 @@
 import { mostrarPerfil } from '../script.js';
 import { PRODUCTOS_MERCADO } from './constants.js';
 
+// animacion de compra
+function animarIconoCompra(evento) {
+    const icono = document.createElement('div');
+    icono.className = 'icono-compra';
+    icono.innerText = '✔️'; 
+
+    // posicionamiento del click
+    icono.style.left = evento.pageX + 'px';
+    icono.style.top = evento.pageY + 'px';
+
+    document.body.appendChild(icono);
+
+
+    setTimeout(() => {
+        icono.remove();
+    }, 1000);
+}
+
 export function pintarProductos() {
     const contenedor = document.getElementById('contenedor-productos');
     if (!contenedor) return;
@@ -10,7 +28,6 @@ export function pintarProductos() {
         const tarjeta = document.createElement('div');
         tarjeta.className = 'tarjeta-producto';
 
-        //tipo de producto
         let nombreEstadistica = "";
         if (producto.tipo === "Arma"){
             nombreEstadistica = "Ataque";
@@ -32,22 +49,19 @@ export function pintarProductos() {
         contenedor.appendChild(tarjeta);
 
         const boton = tarjeta.querySelector('.btn-add');
-        boton.addEventListener('click', () => {
-            gestionarCompra(producto, tarjeta, boton);
+        boton.addEventListener('click', (e) => {
+            gestionarCompra(producto, tarjeta, boton, e);
         });
     });
 }
 
-// inventario
-function gestionarCompra(producto, tarjeta, boton) {
+function gestionarCompra(producto, tarjeta, boton, evento) {
     const jugador = window.jugadorLogueado;
     const slots = document.querySelectorAll('.slot');
 
-    //comprobar si ya esta en el inventario
     const indice = jugador.inventario.findIndex(item => item.id === producto.id);
 
     if(indice === -1){
-        //añadir al inventario
         if (jugador.dinero < producto.precio){
             alert("No tienes suficiente dinero");
             return;
@@ -58,15 +72,16 @@ function gestionarCompra(producto, tarjeta, boton) {
             return;
         }
 
+        // si se compra se  dispara la animacion
+        animarIconoCompra(evento);
+
         jugador.dinero -= producto.precio;
         jugador.inventario.push(producto);
 
-        //cambia de color al seleccionarla
         tarjeta.classList.add('tarjeta-comprada');
         boton.textContent = "Eliminar";
         boton.style.backgroundColor = "red";
 
-        //añadir producto al primer slot del inventario
         for (let slot of slots){
             if (slot.innerHTML === ""){
                 slot.innerHTML = `<img src="${producto.imagen}" id="img-slot-${producto.id}" style="width:100%; height:100%; object-fit:contain;">`;
@@ -74,24 +89,19 @@ function gestionarCompra(producto, tarjeta, boton) {
             }
         }
     } else {
-        //retirar
         jugador.dinero += producto.precio;
         jugador.inventario.splice(indice, 1);
         
-        //volver tarjeta producto a original
         tarjeta.classList.remove('tarjeta-comprada');
         boton.textContent = "Añadir";
         boton.style.backgroundColor = "";
 
-        //quitar producto de inventario
         const imagenRemove = document.getElementById(`img-slot-${producto.id}`);
         if (imagenRemove){
             imagenRemove.parentElement.innerHTML = "";
         }
-
     }
 
-    // actuañizar dinero
     const displayDinero = document.getElementById('dinero-display');
     if (displayDinero) {
         displayDinero.textContent = jugador.dinero + "";
@@ -100,26 +110,24 @@ function gestionarCompra(producto, tarjeta, boton) {
 
 export function botonConfirmar (){
     const btnConfirmar = document.getElementById('btn-comprar-todo');
+    if(!btnConfirmar) return;
 
     btnConfirmar.addEventListener('click', () =>{
         const jugador = window.jugadorLogueado;
 
-        // sumar bonus al personaje
-       jugador.inventario.forEach(objeto => {
-    if (objeto.tipo === "Arma") {
-        jugador.atq += objeto.bonus;
-    } else if (objeto.tipo === "Armadura") {
-        jugador.def += objeto.bonus;
-    } else if (objeto.tipo === "Consumible") {
-        jugador.vida += objeto.bonus;
-    }
-});
+        jugador.inventario.forEach(objeto => {
+            if (objeto.tipo === "Arma") {
+                jugador.atq += objeto.bonus;
+            } else if (objeto.tipo === "Armadura") {
+                jugador.def += objeto.bonus;
+            } else if (objeto.tipo === "Consumible") {
+                jugador.vida += objeto.bonus;
+            }
+        });
 
         document.getElementById('escena-2').classList.add('oculto');
         document.getElementById('escena-3').classList.remove('oculto');
 
         mostrarPerfil();
-
-       
     });
 }
