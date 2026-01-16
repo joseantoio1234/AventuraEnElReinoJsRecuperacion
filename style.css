@@ -42,6 +42,29 @@ body{
     font-weight: bold;
 }
 
+/* examen  top secret ---------------------------------------*/
+#top-secret{
+    font-family: 'Courier New', Courier, monospace;
+    background-color:  #b0b0b0;
+    position: fixed ;
+    bottom: 10px;
+    right: 20px;
+    max-width: 110px;
+    text-align: center;
+    transition: transform 0.4s;
+    border: 1px solid black;
+    max-height: 70px;
+    border-radius: 4px;
+}
+#top-secret:hover {
+    transform: translateY(-120px); 
+}
+
+#carta-secret{
+    background-color: #b0b0b0;
+  
+}
+
 
 /* imagen del avatar */
 #player-img {
