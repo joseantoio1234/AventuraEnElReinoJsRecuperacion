@@ -63,7 +63,7 @@ export function iniciarEscenaBatalla() {
 
 /**
  * @function iniciarPelea
- * @description Ejecuta la lógica del combate por turnos, activa las animaciones y gestiona los puntos ganados.
+ * @description Ejecuta la lógica del combate por turnos, activa las animaciones y gestiona los puntos y monedas ganadas.
  */
 export function iniciarPelea() {
     const jugador = window.jugadorLogueado;
@@ -81,42 +81,80 @@ export function iniciarPelea() {
     imgEnemigo.src = enemigo.imagen;
     document.getElementById('nombre-enemigo-combate').textContent = enemigo.nombre;
 
-    // logica de animacion
+    // Lógica de animación de los luchadores
     imgJugador.classList.remove('animar-entrada-jugador');
     imgEnemigo.classList.remove('animar-entrada-enemigo');
     
-    void imgJugador.offsetWidth; // reinicia la animacion 
+    void imgJugador.offsetWidth; // Reinicia la animación 
 
     imgJugador.classList.add('animar-entrada-jugador');
     imgEnemigo.classList.add('animar-entrada-enemigo');
 
-    
+    // --- REINICIAR ANIMACIÓN DE LAS MONEDAS EN CADA COMBATE ---
+    const monedas = [
+        document.getElementById('moneda-1'),
+        document.getElementById('moneda-2'),
+        document.getElementById('moneda-3')
+    ];
 
+    monedas.forEach(moneda => {
+        if (moneda) {
+            moneda.classList.remove('caida-moneda');
+            void moneda.offsetWidth; // Forzar reflow técnico para resetear la línea de tiempo del CSS
+            moneda.classList.add('caida-moneda');
+        }
+    });
+
+    // --- CÁLCULO DE TURNOS CORREGIDO (Evita bucle infinito si la defensa es alta) ---
     let vidaJ = jugador.vida;
     let vidaE = enemigo.vida;
 
     while (vidaJ > 0 && vidaE > 0) {
-        vidaJ = (vidaJ + jugador.def) - enemigo.atq;
+        // El daño se mitiga con la defensa, pero el daño mínimo por turno es 0
+        const dañoRecibido = enemigo.atq - jugador.def;
+        vidaJ -= (dañoRecibido > 0) ? dañoRecibido : 0;
+        
         if (vidaJ > 0) {
             vidaE = vidaE - jugador.atq;
         }
     }
 
     let ganador = vidaJ > 0 ? jugador.nombre : enemigo.nombre;
-    let puntos = vidaJ > 0 ? enemigo.calcularPuntosRecompensa() : 0;
+    let puntos = 0;
+    let monedasExtra = 0;
     
+    // --- LÓGICA DE RECOMPENSAS (1 PUNTO EXTRA) ---
     if (vidaJ > 0) {
+        // Puntos base + ataque enemigo
+        puntos = enemigo.calcularPuntosRecompensa();
         jugador.puntos += puntos; 
+
+        // Si el enemigo tiene la propiedad multiplicador, sabemos de forma segura que es un Jefe
+        if (enemigo.multiplicador) {
+            monedasExtra = 10;
+        } else {
+            monedasExtra = 5;
+        }
+        jugador.dinero += monedasExtra;
     }
 
     const boxResultado = document.getElementById('resultado-combate');
     boxResultado.classList.add('oculto'); 
 
-    // time out
+    // Visualización de resultados en la caja
     setTimeout(() => {
         boxResultado.classList.remove('oculto');
         document.getElementById('ganador-texto').textContent = `Ganador: ${ganador}`;
-        document.getElementById('puntos-ganados').textContent = `Puntos ganados: ${puntos}`;
+        
+        // Si el jugador ganó, mostramos los puntos y las monedas añadidas al monedero
+        if (vidaJ > 0) {
+            document.getElementById('puntos-ganados').innerHTML = `
+                Puntos ganados: ${puntos}<br>
+                ¡Recompensa extra: +${monedasExtra} monedas de oro!
+            `;
+        } else {
+            document.getElementById('puntos-ganados').textContent = `Puntos ganados: 0`;
+        }
     }, 0);
 
     const btnContinuar = document.getElementById('btn-continuar-ranking');
@@ -127,13 +165,12 @@ export function iniciarPelea() {
             if (combatesRealizados < MAX_COMBATES) {
                 iniciarPelea();
             } else {
-            
                 document.getElementById('escena-5').classList.add('oculto');
                 document.getElementById('escena-6').classList.remove('oculto');
                 
                 mostrarPantallaFinal(); 
 
-                // confeti
+                // Efecto confeti
                 if (jugador.puntos >= 300) {
                     confetti({
                         particleCount: 150,

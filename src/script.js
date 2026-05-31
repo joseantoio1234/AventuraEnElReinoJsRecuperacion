@@ -143,3 +143,28 @@ if (btnIrBatalla) {
         }
     });
 }
+
+// --- Ranking por consola ---
+
+const btnConsolaRanking = document.getElementById('btn-consola-ranking');
+
+if (btnConsolaRanking) {
+    /**
+     * @description Recupera el historial del LocalStorage y lo muestra formateado en la consola.
+     */
+    btnConsolaRanking.addEventListener('click', () => {
+        // Leemos el registro de partidas guardado en LocalStorage
+        const historialRanking = JSON.parse(localStorage.getItem('rankingHeroes')) || [];
+        
+        // Comprobamos si hay datos para mostrar
+        if (historialRanking.length === 0) {
+            console.log("Aún no hay registros de partidas en el ranking.");
+            return;
+        }
+
+        // Mostramos un mensaje estético y la tabla por consola tal como pide el enunciado
+        console.clear(); // Limpia la consola para que se vea ordenado
+        console.log("%c--- CLASIFICACIÓN DE HÉROES ---", "color: #f1c40f; font-weight: bold; font-size: 14px;");
+        console.table(historialRanking);
+    });
+}
